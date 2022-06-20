@@ -1,0 +1,260 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Describing Person Class
+class Person
+{
+
+    // Person Class Properties
+public:
+    string name;
+    int age;
+    string wear_sunglass;
+    string nationality;
+
+    // Person Class Constructor
+    Person(string n, int a, string ws, string nation)
+    {
+
+        name = n;
+        age = a;
+        wear_sunglass = ws;
+        nationality = nation;
+    }
+
+    // Showing Person Details
+    void showPerson()
+    {
+        cout << "Name : " << name << endl;
+        cout << "Age : " << age << endl;
+        cout << "Wear eye glass? Answer : " << wear_sunglass << endl;
+        cout << "Nationality : " << nationality << endl;
+    }
+};
+
+// Describing Employee Class
+class Employee : public Person
+{
+
+    // Employee Class Properties
+protected:
+    string working_place;
+    int employee_no;
+    double salary;
+
+public:
+    // Employee Class Constructor
+    Employee(string n, int a, string ws, string nation, int eno, double sal, string wp) : Person(n, a, ws, nation)
+    {
+        working_place = wp;
+        employee_no = eno;
+        salary = sal;
+    }
+
+    // Showing Employee Details
+    void showEmployee()
+    {
+        showPerson();
+        cout << "Working Place : " << working_place << endl;
+        cout << "Employee No : " << employee_no << endl;
+        cout << "Salary : " << salary << " Tk." << endl;
+    }
+};
+
+// Describing Faculty Class
+class Faculty : public Employee
+{
+
+    // Faculty Class Properties
+protected:
+    string institution_name;
+    string faculty_department;
+    string subject;
+    string subject_code;
+
+public:
+    // Faculty Class Constructor
+
+    Faculty(string n, int a, string ws, string nation, int eno, double sal, string wp, string dept, string sub,
+            string s_code) : Employee(n, a, ws, nation, eno, sal, wp)
+    {
+        faculty_department = dept;
+        subject = sub;
+        subject_code = s_code;
+    }
+
+    // Showing Faculty Details
+    void showFaculty()
+    {
+
+        showEmployee();
+        cout << "Department : " << faculty_department << endl;
+        cout << "Subject : " << subject << endl;
+        cout << "Subject Code : " << subject_code << endl;
+    }
+};
+
+// Describing Officer Class
+class Officer : public Employee
+{
+
+    // Officer Class Properties
+private:
+    int monthly_bonus;
+    string office_time;
+    string room_num;
+
+public:
+    // Officer Class Constructor
+    Officer(string n, int a, string ws, string nation, int eno, double sal, string wp, int m_bonus, string ot,
+            string rnum) : Employee(n, a, ws, nation, eno, sal, wp)
+    {
+
+        monthly_bonus = m_bonus;
+        office_time = ot;
+        room_num = rnum;
+    }
+
+    // Showing Officer Details
+    void showOfficer()
+    {
+
+        showEmployee();
+        cout << "Monthly Salary Bonus : " << monthly_bonus << " Tk." << endl;
+        cout << "Office Time : " << office_time << endl;
+        cout << "Room Number : " << room_num << endl;
+    }
+};
+
+// Describing Student Class
+class Student : virtual public Person
+{
+
+    // Student Class Properties
+protected:
+    double cgpa;
+    string major_subject;
+
+public:
+    int roll_number;
+
+    // Student Class Constructor
+    Student(string n, int a, string ws, string nation, int rnum, string msub,
+            double cg) : Person(n, a, ws, nation)
+    {
+
+        roll_number = rnum;
+        major_subject = msub;
+        cgpa = cg;
+    }
+
+    // Showing Student Details
+    void showStudent()
+    {
+
+        showPerson();
+        cout << "Roll Number : " << roll_number << endl;
+        cout << "Major Subject : " << major_subject << endl;
+        cout << "CGPA : " << cgpa << endl;
+    }
+};
+
+// Describing TA Class
+class TA : public Employee, public Student
+{
+
+    // TA Properties
+private:
+    string intern_teacher;
+    int assistant_days;
+
+public:
+    // TA Class Constructor
+    TA(string n, int a, string ws, string nation, int eno,
+       double sal, string wp, int rnum, string msub, double cg, string iteacher,
+       int ad) : Employee(n, a, ws, nation, eno, sal, wp), Student(n, a, ws, nation, rnum, msub, cg), Person(n, a, ws, nation)
+    {
+
+        intern_teacher = iteacher;
+        assistant_days = ad;
+    }
+
+    // Showing TA Details
+    void showTA()
+    {
+
+        showEmployee();
+        cout << "Assistance of : " << intern_teacher << endl;
+        cout << "Assistance since : " << assistant_days << " Days." << endl;
+    }
+};
+
+// Describing Scholarship Student Class
+class ScholarshipStudent : public Student
+{
+
+    // Scholarship Student Properties
+private:
+    string waiver_for;
+    float waiver_percentage;
+
+public:
+    // Scholarship Student Constructor
+    ScholarshipStudent(string n, int a, string ws, string nation, int rnum, string msub,
+                       double cg, string w_for, float p) : Student(n, a, ws, nation, rnum, msub, cg), Person(n, a, ws, nation)
+    {
+
+        waiver_for = w_for;
+        waiver_percentage = p;
+    }
+
+    // Showing Scholarship Student Details
+    void showScholarshipStudent()
+    {
+
+        showStudent();
+        cout << "Waiver For : " << waiver_for << endl;
+        cout << "Waiver Percentage : " << waiver_percentage << "%" << endl;
+    }
+};
+
+int main()
+{
+
+    // Creating a Faculty Object
+    Faculty fac("Syeda Anika", 26, "NO", "Bangladeshi", 34, 65351.24, "AIUB", "FST", "Introduction to Programming", "CSC 1103");
+
+    // Faculty --> Employee --> Person
+    cout << "-----PERSON-----" << endl;
+    fac.showPerson();
+    cout << "\n\n-----EMPLOYEE-----" << endl;
+    fac.showEmployee();
+    cout << "\n\n-----FACULTY-----" << endl;
+    fac.showFaculty();
+
+    // Creating a Officer Object
+    Officer off("Carmen Z Lamagna", 52, "NO", "Philippines", 3, 97651.52, "AIUB", 4315, "8 am to 4 pm", "DN0911");
+
+    // Officer --> Employee --> Person
+    cout << "\n\n-----OFFICER-----" << endl;
+    off.showOfficer();
+
+    // Creating TA Obejct
+    TA t("Shahariazzaman", 21, "NO", "Bangladeshi", 788, 7651.00, "AIUB", 19875991, "Operating System", 3.79, "Syeda Anika", 41);
+
+    // Multiple Inheritance(Diamond Problem)
+    // TA --> Employee, Student --> Person
+    cout << "\n\n-----STUDENT-----" << endl;
+    t.showStudent();
+    cout << "\n\n-----TA-----" << endl;
+    t.showTA();
+
+    // Creating Scholarship Student Object
+    ScholarshipStudent ss("Joy", 20, "YES", "Bangladeshi", 22469551, "Software Engineering", 3.86, "National Sports Man", 15);
+
+    // Scholarship Student --> Student --> Person
+    cout << "\n\n-----SCHOLARSHIP STUDENT-----" << endl;
+    ss.showScholarshipStudent();
+    return 0;
+}
