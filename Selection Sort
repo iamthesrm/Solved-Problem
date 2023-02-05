@@ -16,15 +16,15 @@ int main(){
     int small, j, t;
     for(int i=0; i<n; i++){
         small = a[i];
-        bool done = false;
+        bool swapped = false;
         for(j=i+1; j<n; j++){
             if(small > a[j]){
                 small = a[j];
                 t = j;
-                done = true;
+                swapped = true;
             }
         }
-        if(done == true){
+        if(swapped == true){
             int temp = a[i];
             a[i] = a[t];
             a[t] = temp;
@@ -36,5 +36,5 @@ int main(){
         cout << a[i] << " ";
     }
     cout << endl;
-    return 0;
+	return 0;
 }
